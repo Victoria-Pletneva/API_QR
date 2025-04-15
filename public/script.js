@@ -10,22 +10,20 @@ form.addEventListener('submit', async (event) => {
 
     const inputValue = input.value.trim();
 
-    // Проверка на пустое значение или повторный ввод
+    //  пустое значение или повторный ввод
     if (!inputValue || inputValue === currentValueInput) return;
     currentValueInput = inputValue;
 
     btn.textContent = "Идет создание QR-кода";
 
     try {
-        // Отправляем запрос к нашему API
+        // Отправляем запрос к API
         const response = await fetch(`/api/qr-generate?text=${encodeURIComponent(inputValue)}`);
         
         if (!response.ok) {
             throw new Error("Ошибка сервера");
         }
-
         const data = await response.json();
-        
         if (!data.qrUrl) {
             throw new Error("Не удалось получить QR-код");
         }
